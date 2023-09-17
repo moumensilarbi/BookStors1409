@@ -27,6 +27,7 @@ namespace bookstore.ViewModels
         public List<Author> Authors { get; set; }
 
         public IFormFile file { get; set; }
+        public string  ImageUrl{ get; set; }
 
     }
 }

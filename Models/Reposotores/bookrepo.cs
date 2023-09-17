@@ -14,12 +14,17 @@ namespace bookstore.Models.Reposotores
             {
             new Book
             {
-            Id=1, Title="c#",Descreption="d1" , 
+                Id=1, Title="c#",
+                Descreption="d1" , 
+                ImageUrl = "4.png",
                 author = new Author{ Id=2}
             },
             new Book
             {
-            Id=2, Title="JAva",Descreption="d1", author = new Author()
+                Id=2, Title="JAva",
+                Descreption="d1",
+                 ImageUrl = "5.png",
+                author = new Author()
             }
             };
 
@@ -54,6 +59,7 @@ namespace bookstore.Models.Reposotores
             book.Title = newbook.Title;
             book.Descreption = newbook.Descreption;
             book.author = newbook.author;
+            book.ImageUrl = newbook.ImageUrl;
 
         }
     }

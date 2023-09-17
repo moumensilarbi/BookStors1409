@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,9 +17,10 @@ namespace bookstore
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+           Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -27,9 +29,16 @@ namespace bookstore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<Ibookstorerepo<Author>, Ahthorrepo >();
-            services.AddSingleton<Ibookstorerepo<Book>, bookrepo>();
-            services.Configure<CookiePolicyOptions>(options =>
+
+            //use this services for memory Dependecies
+            //services.AddSingleton<Ibookstorerepo<Author>, Ahthorrepo >();
+            //services.AddSingleton<Ibookstorerepo<Book>, bookrepo>();
+
+            //use this services for db ef core  Dependecies
+            services.AddScoped<Ibookstorerepo<Author>, AhthorDBrepo>();
+            services.AddScoped<Ibookstorerepo<Book>,BookDBrepository>();
+
+            services.Configure<CookiePolicyOptions>(options => 
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
@@ -38,6 +47,11 @@ namespace bookstore
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<BookstoreDBContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("sqlconn"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +72,11 @@ namespace bookstore
             app.UseCookiePolicy();
 
             //  app.UseMvc();
-           // app.UseStaticFiles();
+            // app.UseStaticFiles();
+            //app.UseMvc(route => {
+
+            //    route.MapRoute("default", "{controller=Book}/{action=Index}/{id?}");
+            //});
             app.UseMvcWithDefaultRoute();
         }
     }
