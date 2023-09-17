@@ -52,3 +52,4 @@ D:\Sources\Bookstores\bookstore\obj\Debug\netcoreapp2.1\bookstore.csproj.Assembl
 D:\Sources\Bookstores\bookstore\obj\Debug\netcoreapp2.1\Razor\Views\Book\Delete.cshtml.g.cs
 D:\Sources\Bookstores\bookstore\obj\Debug\netcoreapp2.1\Razor\Views\Ahthor\Create.cshtml.g.cs
 D:\Sources\Bookstores\bookstore\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Validation.cshtml.g.cs
+D:\Sources\Bookstores\bookstore\bin\Debug\netcoreapp2.1\appsettings1.json

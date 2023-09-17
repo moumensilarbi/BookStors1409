@@ -110,7 +110,8 @@ namespace bookstore.Controllers
                 Title = book.Title,
                 Descreption = book.Descreption,
                 AutherId = authorId,
-                Authors = authorreposotory.List().ToList()
+                Authors = authorreposotory.List().ToList(),
+                ImageUrl=book.ImageUrl
             };
             return View(viewmodel);
         }
@@ -122,12 +123,31 @@ namespace bookstore.Controllers
         {
             try
             {
+                string filename = "";
+                if (viewmodel.file != null)
+                {
+                    var upload = Path.Combine(hosting.WebRootPath, "uploads");
+                    filename = viewmodel.file.FileName;
+                    string fullpath = Path.Combine(upload, filename);
+                    //delete the old file
+                    string oldfilename = bookreposotory.Find(viewmodel.BookId).ImageUrl;
+                    string fulleoldpath = Path.Combine(upload, oldfilename);
+                  
+                    if (fullpath != fulleoldpath)
+                    {
+                        System.IO.File.Delete(fullpath);
+                        //save the new file
+                        viewmodel.file.CopyTo(new FileStream(fullpath, FileMode.Create));
+
+                    }
+                }
                 var auuuthor = authorreposotory.Find(viewmodel.AutherId);
                 Book book = new Book
-                {
+                { Id=viewmodel.BookId,
                     Title = viewmodel.Title,
                     Descreption = viewmodel.Descreption,
-                    author = auuuthor
+                    author = auuuthor,
+                    ImageUrl=filename
 
 
                 };
